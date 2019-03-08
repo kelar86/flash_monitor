@@ -2,12 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class AlertCategory(models.Model):
+    category_label = models.CharField(max_length=50)
+    category = models.CharField(max_length=50, primary_key=True)
+
+
 class AlertStatus(models.Model):
-    status = models.CharField(max_length=255)
+    status_label = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
 
 
 class ProblemStatus(models.Model):
-    status = models.CharField(max_length=255)
+    status_label = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
 
 
 class Unit(models.Model):
@@ -39,6 +46,15 @@ class Alert(models.Model):
     alert_type = models.ForeignKey(
         AlertStatus, on_delete=models.SET_NULL, null=True)
     start_date = models.DateField()
+    finish_date = models.DateField()
+    category = models.ForeignKey(AlertCategory, on_delete=models.CASCADE)
+
+    control = models.ManyToManyField(Control)
+    unit = models.ManyToManyField(Unit)
+    body_type = models.ManyToManyField(BodyType)
+
+    description = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Problem(models.Model):
@@ -48,10 +64,9 @@ class Problem(models.Model):
     application = models.ForeignKey(Application, on_delete=models.CASCADE)
     alert = models.ForeignKey(Alert, on_delete=models.CASCADE, null=True)
 
-    control = models.ForeignKey(Control, on_delete=models.SET_NULL, null=True)
-    unit = models.ForeignKey(Unit, on_delete=models.SET_NULL, null=True)
-    body_type = models.ForeignKey(
-        BodyType, on_delete=models.SET_NULL, null=True)
+    control = models.ManyToManyField(Control)
+    unit = models.ManyToManyField(Unit)
+    body_type = models.ManyToManyField(BodyType)
 
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
