@@ -3,18 +3,18 @@ from django.contrib.auth.models import User
 
 
 class AlertCategory(models.Model):
-    category_label = models.CharField(max_length=50)
-    category = models.CharField(max_length=50, primary_key=True)
+    category_label = models.CharField(max_length=80)
+    category = models.CharField(max_length=80, primary_key=True)
 
 
 class AlertStatus(models.Model):
-    status_label = models.CharField(max_length=50)
-    status = models.CharField(max_length=50)
+    status_label = models.CharField(max_length=80)
+    status = models.CharField(max_length=80)
 
 
 class ProblemStatus(models.Model):
-    status_label = models.CharField(max_length=50)
-    status = models.CharField(max_length=50)
+    status_label = models.CharField(max_length=80)
+    status = models.CharField(max_length=80)
 
 
 class Unit(models.Model):
@@ -48,6 +48,8 @@ class Alert(models.Model):
     start_date = models.DateField()
     finish_date = models.DateField()
     category = models.ForeignKey(AlertCategory, on_delete=models.CASCADE)
+
+    application = models.ForeignKey(Application, on_delete=models.CASCADE)
 
     control = models.ManyToManyField(Control)
     unit = models.ManyToManyField(Unit)

@@ -10,7 +10,7 @@ class ControlAdmin(admin.ModelAdmin):
     list_display = ['name', 'icon', 'is_visiable']
 
 
-Models = (AlertStatus, ProblemStatus, Unit, BodyType,
+Models = (AlertCategory, AlertStatus, ProblemStatus, Unit, BodyType,
           Alert, Problem)
 
 admin.site.register(Application, ApplicationAdmin)
