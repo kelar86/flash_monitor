@@ -7,16 +7,16 @@ from django.utils.timezone import now
 class SearchObject(models.Model):
 
     application = models.OneToOneField(
-        Application, null=True, on_delete=models.CASCADE)
+        Application, null=True, on_delete=models.CASCADE, blank=True)
 
     control = models.OneToOneField(
-        Control, null=True, on_delete=models.CASCADE)
+        Control, null=True, on_delete=models.CASCADE, blank=True)
 
     unit = models.OneToOneField(
-        Unit, null=True, on_delete=models.CASCADE)
+        Unit, null=True, on_delete=models.CASCADE, blank=True)
 
     body_type = models.OneToOneField(
-        BodyType, null=True, on_delete=models.CASCADE)
+        BodyType, null=True, on_delete=models.CASCADE, blank=True)
 
 
 class SearchResult(models.Model):
