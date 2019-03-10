@@ -23,3 +23,7 @@ class SearchResult(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=now, editable=False)
     search_object = models.ForeignKey(SearchObject, on_delete=models.CASCADE)
+
+
+class SearchAdvise(models.Model):
+    schema = models.TextField()

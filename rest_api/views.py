@@ -1,14 +1,15 @@
+import json
 from rest_framework import viewsets
 from monitor.models import *
+from .models import *
 from .serializers import *
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics
 from itertools import chain
 from rest_framework import filters
 from django_filters import FilterSet
-from drf_multiple_model.views import ObjectMultipleModelAPIView
+from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
 
 
 class ApplicationsViewSet(viewsets.ModelViewSet):
@@ -43,7 +44,7 @@ class ProblemDetail(APIView):
         return Response(serializer.data)
 
 
-class SearchFilterView(ObjectMultipleModelAPIView):
+class SearchFilterView(FlatMultipleModelAPIView):
     querylist = (
         {'queryset': Application.objects.all(
         ), 'serializer_class': ApplicationSearchSerializer},
@@ -53,3 +54,9 @@ class SearchFilterView(ObjectMultipleModelAPIView):
     )
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
+
+
+class AdviseSearchView(APIView):
+    def get(self, request):
+        search = SearchAdvise.objects.get(pk=1)
+        return Response(json.loads(search.schema))

@@ -9,10 +9,10 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Control)
 class ControlAdmin(admin.ModelAdmin):
-    list_display = ['name', 'icon', 'is_visiable']
+    list_display = ['name', 'is_visiable', 'control_type']
 
 
 Models = (AlertCategory, AlertStatus, ProblemStatus, Unit, BodyType,
-          Alert, Problem)
+          Alert, Problem, ControlType)
 
 admin.site.register(Models)

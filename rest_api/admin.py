@@ -10,3 +10,8 @@ class SearchResultAdmin(admin.ModelAdmin):
 @admin.register(SearchObject)
 class SearchObjectAdmin(admin.ModelAdmin):
     list_display = ['application', 'control', 'unit', 'body_type']
+
+
+@admin.register(SearchAdvise)
+class SearchAdviseAdmin(admin.ModelAdmin):
+    list_display = ['schema']

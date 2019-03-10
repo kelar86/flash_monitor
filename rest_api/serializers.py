@@ -43,5 +43,5 @@ class UnitSearchSerializer(serializers.ModelSerializer):
 
 class BodyTypeSearchSerializer(serializers.ModelSerializer):
     class Meta:
-        models = BodyType
+        model = BodyType
         fields = ('id', 'name')
