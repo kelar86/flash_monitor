@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_multiple_model',
+    'django_filters',
     'monitor',
     'rest_api'
 ]
@@ -125,3 +127,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
 
 MEDIA_URL = '/media/'
+
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+# }

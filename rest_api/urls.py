@@ -9,5 +9,7 @@ router.register(r'problems', api_views.ProblemsViewSet)
 router.register(r'alerts', api_views.AlertsViewSet)
 
 urlpatterns = [
-    path(r'', include(router.urls))
+    path(r'', include(router.urls)),
+    path(r'problems/<int:id>/', api_views.ProblemDetail.as_view()),
+    path(r'search', api_views.SearchFilterView.as_view()),
 ]

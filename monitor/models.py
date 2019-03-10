@@ -30,6 +30,7 @@ class Unit(models.Model):
     name = models.CharField(max_length=255)
     icon = models.ImageField(null=True, blank=True)
     is_visiable = models.BooleanField(default=True)
+    search_fields = ('name',)
 
     def __str__(self):
         return self.name
@@ -39,6 +40,7 @@ class Control(models.Model):
     name = models.CharField(max_length=255)
     icon = models.ImageField(null=True, blank=True)
     is_visiable = models.BooleanField(default=True)
+    search_fields = ('name',)
 
     def __str__(self):
         return self.name
@@ -48,6 +50,7 @@ class BodyType(models.Model):
     name = models.CharField(max_length=255)
     icon = models.ImageField(null=True, blank=True)
     is_visiable = models.BooleanField(default=True)
+    search_fields = ('name',)
 
     def __str__(self):
         return self.name
@@ -58,6 +61,7 @@ class Application(models.Model):
     icon = models.ImageField(null=True, blank=True)
     has_controls = models.BooleanField(default=False)
     is_visiable = models.BooleanField(default=True)
+    search_fields = ('name',)
 
     def __str__(self):
         return self.name
@@ -88,13 +92,14 @@ class Problem(models.Model):
         ProblemStatus, on_delete=models.SET_NULL, null=True)
     detection_date = models.DateTimeField()
     application = models.OneToOneField(Application, on_delete=models.CASCADE)
-    alert = models.ForeignKey(Alert, on_delete=models.CASCADE, null=True)
+    alert = models.ForeignKey(
+        Alert, on_delete=models.CASCADE, null=True, blank=True)
 
     control = models.ManyToManyField(Control, blank=True, null=True)
     unit = models.ManyToManyField(Unit, blank=True, null=True)
     body_type = models.ManyToManyField(BodyType, blank=True, null=True)
 
-    description = models.TextField(null=True)
+    description = models.TextField(blank=True)
     author = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
