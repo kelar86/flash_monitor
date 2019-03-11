@@ -3,17 +3,15 @@ from django.dispatch import receiver
 from monitor.models import Problem
 from .models import SearchAdvise
 import json
+from collections import Counter
+from itertools import chain
 
-# import logging
-# logger = logging.getLogger(__name__)
 
-
-@receiver(post_save, sender=Problem)
 def update_search_advise(sender, **kwargs):
 
     # logger.error('SIGNAL!!!')
 
-    last_problems = Problem.objects.all()[:10]
+    last_problems = Problem.objects.order_by('-detection_date').all()[:10]
 
     apps = [i + ('application',)
             for i in last_problems.values_list('application__id', 'application__name') if i[0]]
@@ -28,7 +26,10 @@ def update_search_advise(sender, **kwargs):
                          key=lambda item: item[1], reverse=True)
 
     result_dict = [{'id': item[0][0], 'name': item[0][1], 'type': item[0][2]}
-                   for item in result]
+                   for item in result_list]
 
     SearchAdvise.objects.update_or_create(
         pk=1, defaults={'schema': json.dumps(result_dict)})
+
+
+post_save.connect(update_search_advise, sender=Problem)
