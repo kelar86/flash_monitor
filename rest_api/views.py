@@ -6,7 +6,6 @@ from .serializers import *
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from itertools import chain
 from rest_framework import filters
 from django_filters import FilterSet
 from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
