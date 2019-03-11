@@ -3,3 +3,4 @@ djangorestframework==3.8.2
 django-rest-multiple-models
 django-filter
 Pillow
+django-cors-headers
