@@ -41,10 +41,10 @@ class ProblemStatus(models.Model):
 
 
 class Unit(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.ImageField(null=True, blank=True)
-    is_visiable = models.BooleanField(default=True)
-    search_fields = ('name',)
+    name = models.CharField(max_length=255, verbose_name=u"Название")
+    icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
+    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    search_fields = ("name",)
 
     def __str__(self):
         return self.name
@@ -55,10 +55,10 @@ class Unit(models.Model):
 
 
 class Control(models.Model):
-    name = models.CharField(max_length=255)
-    is_visiable = models.BooleanField(default=True)
-    icon = models.ImageField(null=True, blank=True)
-    search_fields = ('name',)
+    name = models.CharField(max_length=255, verbose_name=u"Название")
+    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
+    search_fields = ("name",)
 
     def __str__(self):
         return self.name
@@ -69,10 +69,10 @@ class Control(models.Model):
 
 
 class BodyType(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.ImageField(null=True, blank=True)
-    is_visiable = models.BooleanField(default=True)
-    search_fields = ('name',)
+    name = models.CharField(max_length=255, verbose_name=u"Название")
+    icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
+    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    search_fields = ("name",)
 
     def __str__(self):
         return self.name
@@ -83,11 +83,11 @@ class BodyType(models.Model):
 
 
 class Application(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.ImageField(null=True, blank=True)
-    has_controls = models.BooleanField(default=False)
-    is_visiable = models.BooleanField(default=True)
-    search_fields = ('name',)
+    name = models.CharField(max_length=255, verbose_name=u"Название")
+    icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
+    has_controls = models.BooleanField(default=False, verbose_name=u"Наличие блоков управления")
+    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    search_fields = ("name",)
 
     def __str__(self):
         return self.name
@@ -99,26 +99,26 @@ class Application(models.Model):
 
 class Alert(models.Model):
     alert_type = models.ForeignKey(
-        AlertStatus, on_delete=models.CASCADE, default='ACTIVE')
-    start_date = models.DateField(default=now)
-    finish_date = models.DateField(null=True, blank=True)
-    category = models.ForeignKey(AlertCategory, on_delete=models.CASCADE)
+        AlertStatus, on_delete=models.CASCADE, default="ACTIVE", verbose_name=u"Статус")
+    start_date = models.DateField(default=now, verbose_name=u"Дата начала")
+    finish_date = models.DateField(null=True, blank=True, verbose_name=u"Дата окончания(план)")
+    category = models.ForeignKey(AlertCategory, on_delete=models.CASCADE, verbose_name=u"Категория алерта")
 
-    application = models.ForeignKey(Application, on_delete=models.CASCADE)
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
 
-    control = models.ManyToManyField(Control, blank=True, null=True)
-    unit = models.ManyToManyField(Unit, blank=True, null=True)
-    body_type = models.ManyToManyField(BodyType, blank=True, null=True)
+    control = models.ManyToManyField(Control, blank=True, null=True, verbose_name=u"Блоки управления")
+    unit = models.ManyToManyField(Unit, blank=True, null=True, verbose_name=u"Агрегаты")
+    body_type = models.ManyToManyField(BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
 
-    description = models.TextField(blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    description = models.TextField(blank=True, verbose_name=u"Описание")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
 
     @property
     def is_planed(self):
         return self.start_date > now.date()
 
     def __str__(self):
-        return '%s %s' % (self.start_date, self.application)
+        return "%s %s" % (self.start_date, self.application)
 
     class Meta:
         verbose_name = u"Алерт"
@@ -127,22 +127,22 @@ class Alert(models.Model):
 
 class Problem(models.Model):
     status = models.ForeignKey(
-        ProblemStatus, on_delete=models.SET_NULL, null=True, default='NEW')
-    detection_date = models.DateTimeField(default=now)
+        ProblemStatus, on_delete=models.SET_NULL, null=True, default="NEW", verbose_name=u"Статус")
+    detection_date = models.DateTimeField(default=now, verbose_name=u"Дата и время обнаружения")
     application = models.ForeignKey(
-        Application, on_delete=models.CASCADE)
+        Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
     alert = models.ForeignKey(
-        Alert, on_delete=models.CASCADE, null=True, blank=True)
+        Alert, on_delete=models.CASCADE, null=True, blank=True, verbose_name=u"Алерт")
 
-    control = models.ManyToManyField(Control, blank=True, null=True)
-    unit = models.ManyToManyField(Unit, blank=True, null=True)
-    body_type = models.ManyToManyField(BodyType, blank=True, null=True)
+    control = models.ManyToManyField(Control, blank=True, null=True, verbose_name=u"Блоки управления")
+    unit = models.ManyToManyField(Unit, blank=True, null=True, verbose_name=u"Агрегаты")
+    body_type = models.ManyToManyField(BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
 
-    description = models.TextField(blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    description = models.TextField(blank=True, verbose_name=u"Описание")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
 
     def __str__(self):
-        return '%s %s' % (self.detection_date, self.application)
+        return "%s %s" % (self.detection_date, self.application)
 
     class Meta:
         verbose_name = u"Проблема"

@@ -24,6 +24,11 @@ class ProblemAdmin(admin.ModelAdmin):
     filter_horizontal = ('control', 'unit', 'body_type')
 
 
-Models = (AlertCategory, AlertStatus, ProblemStatus, Unit, BodyType)
+Models = (
+    AlertCategory,
+    AlertStatus,
+    ProblemStatus,
+    Unit,
+    BodyType)
 
 admin.site.register(Models)

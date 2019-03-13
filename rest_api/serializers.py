@@ -26,22 +26,22 @@ class AlertSerializer(serializers.ModelSerializer):
 class ApplicationSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'icon')
 
 
 class ControlSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Control
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'icon')
 
 
 class UnitSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'icon')
 
 
 class BodyTypeSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = BodyType
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'icon')
