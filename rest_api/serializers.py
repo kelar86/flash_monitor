@@ -20,7 +20,7 @@ class AlertSerializer(serializers.ModelSerializer):
         model = Alert
         fields = ('id', 'alert_type', 'start_date',
                   'finish_date', 'category', 'control', 'unit',
-                  'body_type', 'description', 'author')
+                  'body_type', 'description', 'author', 'is_planed')
 
 
 class ApplicationSearchSerializer(serializers.ModelSerializer):
