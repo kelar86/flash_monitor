@@ -4,3 +4,4 @@ django-rest-multiple-models
 django-filter
 Pillow
 django-cors-headers
+django-rest-auth
