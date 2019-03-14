@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
     'drf_multiple_model',
     'django_filters',
     'monitor',
@@ -132,6 +134,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
 MEDIA_URL = '/media/'
 
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
-# }
+REST_FRAMEWORK = {
+  'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}

@@ -1,3 +1,7 @@
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated
+
 import json
 from rest_framework import viewsets
 from monitor.models import *
@@ -11,6 +15,8 @@ from django_filters import FilterSet
 from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
 
 
+# @authentication_classes((SessionAuthentication, BasicAuthentication))
+# @permission_classes((IsAuthenticated,))
 class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
