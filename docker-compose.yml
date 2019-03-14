@@ -4,9 +4,18 @@ services:
   django:
     build: .
     volumes:
-      - ./:/code  
+      - ./:/code
     ports:
       - "8000:8000"
     command: python3 manage.py runserver 0.0.0.0:8000
     restart: unless-stopped
-    
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend/static:/static
+    ports:
+      - "8181:8181"
+    # command: python3 -m http.server 8181
+    # expose:
+    #   - '8181'

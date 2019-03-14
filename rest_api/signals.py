@@ -5,6 +5,7 @@ from .models import SearchAdvise
 import json
 from collections import Counter
 from itertools import chain
+from django.conf import settings
 
 
 def update_search_advise(sender, **kwargs):
@@ -26,7 +27,7 @@ def update_search_advise(sender, **kwargs):
     result_list = sorted(counted_list.items(),
                          key=lambda item: item[1], reverse=True)
 
-    result_dict = [{'type': item[0][0], 'id': item[0][1], 'name': item[0][2], 'icon': item[0][3] }
+    result_dict = [{'type': item[0][0], 'id': item[0][1], 'name': item[0][2], 'icon': '' + settings.BASE_URL + settings.MEDIA_URL + item[0][3]}
                    for item in result_list]
 
     SearchAdvise.objects.update_or_create(

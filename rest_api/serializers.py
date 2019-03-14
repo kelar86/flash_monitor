@@ -24,12 +24,14 @@ class AlertSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSearchSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Application
         fields = ('id', 'name', 'icon')
 
 
 class ControlSearchSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Control
         fields = ('id', 'name', 'icon')
