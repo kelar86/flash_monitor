@@ -621,9 +621,9 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/alexey/HDD/flash-monitor-spa/src/styles.css */"./src/styles.css");
-__webpack_require__(/*! /home/alexey/HDD/flash-monitor-spa/node_modules/bootstrap/dist/css/bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
-module.exports = __webpack_require__(/*! /home/alexey/HDD/flash-monitor-spa/node_modules/font-awesome/css/font-awesome.css */"./node_modules/font-awesome/css/font-awesome.css");
+__webpack_require__(/*! /home/alexey/develop/FLASH_MONITOR/flash-monitor-frontend/src/styles.css */"./src/styles.css");
+__webpack_require__(/*! /home/alexey/develop/FLASH_MONITOR/flash-monitor-frontend/node_modules/bootstrap/dist/css/bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
+module.exports = __webpack_require__(/*! /home/alexey/develop/FLASH_MONITOR/flash-monitor-frontend/node_modules/font-awesome/css/font-awesome.css */"./node_modules/font-awesome/css/font-awesome.css");
 
 
 /***/ })

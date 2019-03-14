@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header-container>\n</app-header-container>\n<div class=\"container\">\n    <app-problem-form>\n    </app-problem-form>\n</div>"
+module.exports = "<app-header-container>\n</app-header-container>\n<div class=\"container\">\n    <!-- <app-dash-container></app-dash-container> -->\n</div>"
 
 /***/ }),
 
@@ -103,12 +103,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_header_container_header_container_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/header-container/header-container.component */ "./src/app/components/header-container/header-container.component.ts");
 /* harmony import */ var _components_problem_form_problem_form_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/problem-form/problem-form.component */ "./src/app/components/problem-form/problem-form.component.ts");
 /* harmony import */ var angular_font_awesome__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! angular-font-awesome */ "./node_modules/angular-font-awesome/dist/angular-font-awesome.es5.js");
+/* harmony import */ var _components_dash_container_dash_container_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/dash-container/dash-container.component */ "./src/app/components/dash-container/dash-container.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -131,7 +133,8 @@ var AppModule = /** @class */ (function () {
                 _components_search_search_component__WEBPACK_IMPORTED_MODULE_5__["SearchComponent"],
                 _components_clock_clock_component__WEBPACK_IMPORTED_MODULE_8__["ClockComponent"],
                 _components_header_container_header_container_component__WEBPACK_IMPORTED_MODULE_9__["HeaderContainerComponent"],
-                _components_problem_form_problem_form_component__WEBPACK_IMPORTED_MODULE_10__["ProblemFormComponent"]
+                _components_problem_form_problem_form_component__WEBPACK_IMPORTED_MODULE_10__["ProblemFormComponent"],
+                _components_dash_container_dash_container_component__WEBPACK_IMPORTED_MODULE_12__["DashContainerComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -141,6 +144,7 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
                 angular_font_awesome__WEBPACK_IMPORTED_MODULE_11__["AngularFontAwesomeModule"]
             ],
+            entryComponents: [_components_problem_form_problem_form_component__WEBPACK_IMPORTED_MODULE_10__["ProblemFormComponent"]],
             providers: [_services_monitor_api_service__WEBPACK_IMPORTED_MODULE_7__["MonitorApiService"], _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClientModule"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
@@ -202,6 +206,53 @@ var ClockComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/dash-container/dash-container.component.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/components/dash-container/dash-container.component.ts ***!
+  \***********************************************************************/
+/*! exports provided: DashContainerComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashContainerComponent", function() { return DashContainerComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_services_monitor_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/monitor-api.service */ "./src/app/services/monitor-api.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var DashContainerComponent = /** @class */ (function () {
+    function DashContainerComponent(api) {
+        this.api = api;
+    }
+    DashContainerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.api.getAlerts('')
+            .subscribe(function (value) { return _this.alerts = value; });
+    };
+    DashContainerComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-dash-container',
+            template: "\n    <p>\n      dash-container works!\n    </p>\n    <pre>{{alerts | json}}</pre>\n  ",
+            styles: []
+        }),
+        __metadata("design:paramtypes", [src_app_services_monitor_api_service__WEBPACK_IMPORTED_MODULE_1__["MonitorApiService"]])
+    ], DashContainerComponent);
+    return DashContainerComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/header-container/header-container.component.css":
 /*!****************************************************************************!*\
   !*** ./src/app/components/header-container/header-container.component.css ***!
@@ -224,6 +275,8 @@ module.exports = ".header {\n    background: grey;\n}\n"
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeaderContainerComponent", function() { return HeaderContainerComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _problem_form_problem_form_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../problem-form/problem-form.component */ "./src/app/components/problem-form/problem-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -234,21 +287,27 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var HeaderContainerComponent = /** @class */ (function () {
-    function HeaderContainerComponent() {
+    function HeaderContainerComponent(modalService) {
+        this.modalService = modalService;
     }
     HeaderContainerComponent.prototype.ngOnInit = function () {
     };
     HeaderContainerComponent.prototype.getFilterOption = function ($event) {
         console.log($event);
     };
+    HeaderContainerComponent.prototype.open = function () {
+        this.modalService.open(_problem_form_problem_form_component__WEBPACK_IMPORTED_MODULE_2__["ProblemFormComponent"]);
+    };
     HeaderContainerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-header-container',
-            template: "\n    <header>\n      <div class=\"container header\">\n       <div class=\"row\">\n        <div class=\"col\">\n          \u041B\u041E\u0413\u041E\u0422\u0418\u041F\n        </div>\n        <div class=\"col\">\n          <h4>Flash Monitor</h4>\n        </div>\n\n        <div class=\"col\">\n          <app-clock></app-clock>\n        </div>\n       </div>\n       <div class=\"row\"> \n            <nav class=\"col-4\">\n              <button class=\"btn btn-dark\"> + \u041F\u0440\u043E\u0431\u043B\u0435\u043C\u0430 </button>\n            </nav>\n            <div class=\"col-8\">\n              <app-search (valueChange)='getFilterOption($event)'></app-search>\n            </div>\n        </div>\n        \n     \n      </div>  \n    </header>\n  ",
+            template: "\n    <header>\n      <div class=\"container header\">\n       <div class=\"row\">\n        <div class=\"col\">\n          \u041B\u041E\u0413\u041E\u0422\u0418\u041F\n        </div>\n        <div class=\"col\">\n          <h4>Flash Monitor</h4>\n        </div>\n\n        <div class=\"col\">\n          <app-clock></app-clock>\n        </div>\n       </div>\n       <div class=\"row\">\n            <nav class=\"col-4\">\n              <button class=\"btn btn-dark\" (click)=\"open()\"> + \u041F\u0440\u043E\u0431\u043B\u0435\u043C\u0430 </button>\n            </nav>\n            <div class=\"col-8\">\n              <app-search (valueChange)='getFilterOption($event)'></app-search>\n            </div>\n        </div>\n      </div>\n    </header>\n  ",
             styles: [__webpack_require__(/*! ./header-container.component.css */ "./src/app/components/header-container/header-container.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbModal"]])
     ], HeaderContainerComponent);
     return HeaderContainerComponent;
 }());
@@ -264,7 +323,7 @@ var HeaderContainerComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "button {\n    margin: 0 20px 0 0;\n}"
 
 /***/ }),
 
@@ -275,7 +334,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form>\n  <h3>Заявить о проблеме</h3>\n  <!-- DatePicker -->\n  <div>\n    <label> Дата и время\n      <input class=\"form-control\" placeholder=\"yyyy-mm-dd\" name=\"dp\" ngbDatepicker\n        #d=\"ngbDatepicker\">\n      <div class=\"input-group-append\">\n        <button class=\"btn btn-outline-secondary calendar\" (click)=\"d.toggle()\" type=\"button\"><i\n            class=\"fa fa-calendar\"></i></button>\n      </div>\n    </label>\n  </div>\n  <!-- Приложение -->\n  <div>\n    <label>Приложение\n      <select class=\"form-control\">\n        <option>Приложение1</option>\n      </select>\n    </label>\n  </div>\n  <!-- Блоки управления -->\n  <div>\n    <label>Блоки управления\n      <textarea class=\"form-control\" aria-label=\"Блоки управления\"></textarea>\n    </label>\n  </div>\n  <!-- Агрегат -->\n  <div>\n    <label>Агрегат\n      <textarea class=\"form-control\" aria-label=\"Агрегат\"></textarea>\n    </label>\n  </div>\n\n  <!--Кузов -->\n  <div>\n    <label>Кузов\n      <textarea class=\"form-control\" aria-label=\"Кузов\"></textarea>\n    </label>\n  </div>\n  <!-- Описание проблемы -->\n  <div>\n    <label>Описание проблемы\n      <textarea class=\"form-control\" aria-label=\"Описание проблемы\"></textarea>\n    </label>\n  </div>\n\n  <div>\n    <button class=\"btn btn-primary\">Отправить</button>\n    <button class=\"btn btn-primary\">Закрыть</button>\n  </div>\n\n</form>"
+module.exports = "<div class=\"modal-body\">\n  <form class=\"problem-form\">\n    <h3>Заявить о проблеме</h3>\n    <!-- DatePicker -->\n    <div>\n      <label> Дата и время\n        <div class=\"input-group\">\n          <input class=\"form-control\" placeholder=\"yyyy-mm-dd\" name=\"dp\" ngbDatepicker #d=\"ngbDatepicker\">\n          <div class=\"input-group-append\">\n            <button class=\"btn btn-outline-secondary calendar\" (click)=\"d.toggle()\" type=\"button\"><i\n                class=\"fa fa-calendar\"></i></button>\n          </div>\n        </div>\n      </label>\n    </div>\n    <!-- Приложение -->\n    <div>\n      <label>Приложение\n        <select class=\"form-control\">\n          <option>Приложение1</option>\n        </select>\n      </label>\n    </div>\n    <!-- Блоки управления -->\n    <div>\n      <label>Блоки управления\n        <textarea class=\"form-control\" aria-label=\"Блоки управления\"></textarea>\n      </label>\n    </div>\n    <!-- Агрегат -->\n    <div>\n      <label>Агрегат\n        <textarea class=\"form-control\" aria-label=\"Агрегат\"></textarea>\n      </label>\n    </div>\n\n    <!--Кузов -->\n    <div>\n      <label>Кузов\n        <textarea class=\"form-control\" aria-label=\"Кузов\"></textarea>\n      </label>\n    </div>\n    <!-- Описание проблемы -->\n    <div>\n      <label>Описание проблемы\n        <textarea class=\"form-control\" aria-label=\"Описание проблемы\"></textarea>\n      </label>\n    </div>\n    <div>\n      <button class=\"btn btn-dark\" (click)=\"activeModal.close('Send click')\" >Отправить</button>\n      <button class=\"btn btn-dark\" (click)=\"activeModal.close('Close click')\" >Закрыть</button>\n    </div>\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -290,6 +349,7 @@ module.exports = "<form>\n  <h3>Заявить о проблеме</h3>\n  <!-- 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProblemFormComponent", function() { return ProblemFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -300,8 +360,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ProblemFormComponent = /** @class */ (function () {
-    function ProblemFormComponent() {
+    function ProblemFormComponent(activeModal) {
+        this.activeModal = activeModal;
     }
     ProblemFormComponent.prototype.ngOnInit = function () {
     };
@@ -311,7 +373,7 @@ var ProblemFormComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./problem-form.component.html */ "./src/app/components/problem-form/problem-form.component.html"),
             styles: [__webpack_require__(/*! ./problem-form.component.css */ "./src/app/components/problem-form/problem-form.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"]])
     ], ProblemFormComponent);
     return ProblemFormComponent;
 }());
@@ -452,12 +514,17 @@ var MonitorApiService = /** @class */ (function () {
         return this.http
             .get("http://" + this.baseUrl + "/problems/", { headers: headers });
     };
+    MonitorApiService.prototype.getAlerts = function (filter) {
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Content-Type': 'application/json' });
+        return this.http
+            .get("http://" + this.baseUrl + "/alerts/?search=" + filter, { headers: headers });
+    };
     MonitorApiService.prototype.search = function (query) {
         var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({ 'Content-Type': 'application/json' });
         if (query === '') {
-            return this.http.get("http://" + this.baseUrl + "/advise-search", { headers: headers });
+            return this.http.get("http://" + this.baseUrl + "/top-problems", { headers: headers });
         }
-        return this.http.get("http://" + this.baseUrl + "/search?search=" + query, { headers: headers });
+        return this.http.get("http://" + this.baseUrl + "/filter-advise?search=" + query, { headers: headers });
     };
     MonitorApiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -534,7 +601,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/alexey/HDD/flash-monitor-spa/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/alexey/develop/FLASH_MONITOR/flash-monitor-frontend/src/main.ts */"./src/main.ts");
 
 
 /***/ })

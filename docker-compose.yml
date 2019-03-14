@@ -15,7 +15,7 @@ services:
     volumes:
       - ./frontend/static:/static
     ports:
-      - "8181:8181"
+      - "80:80"
     # command: python3 -m http.server 8181
     # expose:
     #   - '8181'
