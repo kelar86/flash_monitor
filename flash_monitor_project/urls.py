@@ -14,4 +14,4 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 if 'rest_api' in settings.INSTALLED_APPS:
-    urlpatterns += [path(r'api/', include('rest_api.urls'))]
+    urlpatterns += [path(r'api/v1/', include('rest_api.urls'))]
