@@ -28,7 +28,7 @@ services:
       # - ./frontend/static:/home
       # - ./static/:/static
     ports:
-      - "80:80"
+      - "80:8080"
       - "443:443"
     command: /bin/bash -c "envsubst < /etc/nginx/conf.d/nginx.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
     links:
