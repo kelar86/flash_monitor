@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+from datetime import *
 from django.utils.timezone import now
+import pytz
 
 
 class AlertCategory(models.Model):
@@ -100,9 +101,9 @@ class Application(models.Model):
 class Alert(models.Model):
     alert_type = models.ForeignKey(
         AlertStatus, on_delete=models.CASCADE, default="ACTIVE", verbose_name=u"Статус")
-    start_date = models.DateField(default=now, verbose_name=u"Дата начала")
+    start_date = models.DateTimeField(default=datetime.utcnow(), verbose_name=u"Дата начала")
     finish_date = models.DateField(null=True, blank=True, verbose_name=u"Дата окончания(план)")
-    category = models.ForeignKey(AlertCategory, on_delete=models.CASCADE, verbose_name=u"Категория алерта")
+    category = models.ForeignKey(AlertCategory, default="APPLICATION_ALERT", on_delete=models.CASCADE, verbose_name=u"Категория алерта")
 
     application = models.ForeignKey(Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
 
@@ -115,7 +116,10 @@ class Alert(models.Model):
 
     @property
     def is_planed(self):
-        return self.start_date > now.date()
+        utc = pytz.utc
+        start_date = self.start_date.replace(tzinfo=utc)
+        now_date = datetime.utcnow().replace(tzinfo=utc)
+        return start_date > now_date
 
     def __str__(self):
         return "%s %s" % (self.start_date, self.application)
@@ -128,7 +132,7 @@ class Alert(models.Model):
 class Problem(models.Model):
     status = models.ForeignKey(
         ProblemStatus, on_delete=models.SET_NULL, null=True, default="NEW", verbose_name=u"Статус")
-    detection_date = models.DateTimeField(default=now, verbose_name=u"Дата и время обнаружения")
+    detection_date = models.DateTimeField(default=datetime.utcnow(), verbose_name=u"Дата и время обнаружения")
     application = models.ForeignKey(
         Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
     alert = models.ForeignKey(
