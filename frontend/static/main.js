@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header-container>\n</app-header-container>\n<div class=\"container\">\n    <!-- <app-dash-container></app-dash-container> -->\n</div>"
+module.exports = "<app-header-container>\n</app-header-container>\n<div class=\"container\">\n\n</div>"
 
 /***/ }),
 
