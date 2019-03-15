@@ -53,9 +53,13 @@ class SearchFilterView(FlatMultipleModelAPIView):
     querylist = (
         {'queryset': Application.objects.all(
         ), 'serializer_class': ApplicationSearchSerializer},
-        {'queryset': Control.objects.all(), 'serializer_class': ControlSearchSerializer},
-        {'queryset': Unit.objects.all(), 'serializer_class': UnitSearchSerializer},
-        {'queryset': BodyType.objects.all(), 'serializer_class': BodyTypeSearchSerializer}
+
+        {'queryset': Control.objects.all(), 'serializer_class': CatalogSerializer.get_for_model(
+            Control)},
+        {'queryset': Unit.objects.all(), 'serializer_class': CatalogSerializer.get_for_model(
+            Unit)},
+        {'queryset': BodyType.objects.all(), 'serializer_class': CatalogSerializer.get_for_model(
+            BodyType)}
     )
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
