@@ -44,7 +44,8 @@ class ProblemStatus(models.Model):
 class Unit(models.Model):
     name = models.CharField(max_length=255, verbose_name=u"Название")
     icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
-    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    is_visiable = models.BooleanField(
+        default=True, verbose_name=u"Отображать для клиента")
     search_fields = ("name",)
 
     def __str__(self):
@@ -55,11 +56,30 @@ class Unit(models.Model):
         verbose_name_plural = u"Агрегаты"
 
 
+class ControlType(models.Model):
+    type_name = models.CharField(
+        max_length=255, verbose_name=u"Тип блока управления")
+    icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
+
+    def __str__(self):
+        return self.type_name
+
+    class Meta:
+        verbose_name = u"Тип блока управления"
+        verbose_name_plural = u"Тип блока управления"
+
+
 class Control(models.Model):
     name = models.CharField(max_length=255, verbose_name=u"Название")
-    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
-    icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
+    is_visiable = models.BooleanField(
+        default=True, verbose_name=u"Отображать для клиента")
+    control_type = models.ForeignKey(
+        ControlType, on_delete=models.CASCADE, verbose_name=u"Тип блока управления")
     search_fields = ("name",)
+
+    @property
+    def icon(self):
+        return self.control_type.icon
 
     def __str__(self):
         return self.name
@@ -72,7 +92,8 @@ class Control(models.Model):
 class BodyType(models.Model):
     name = models.CharField(max_length=255, verbose_name=u"Название")
     icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
-    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    is_visiable = models.BooleanField(
+        default=True, verbose_name=u"Отображать для клиента")
     search_fields = ("name",)
 
     def __str__(self):
@@ -86,8 +107,10 @@ class BodyType(models.Model):
 class Application(models.Model):
     name = models.CharField(max_length=255, verbose_name=u"Название")
     icon = models.ImageField(null=True, blank=True, verbose_name=u"Иконка")
-    has_controls = models.BooleanField(default=False, verbose_name=u"Наличие блоков управления")
-    is_visiable = models.BooleanField(default=True, verbose_name=u"Отображать для клиента")
+    has_controls = models.BooleanField(
+        default=False, verbose_name=u"Наличие блоков управления")
+    is_visiable = models.BooleanField(
+        default=True, verbose_name=u"Отображать для клиента")
     search_fields = ("name",)
 
     def __str__(self):
@@ -101,18 +124,26 @@ class Application(models.Model):
 class Alert(models.Model):
     alert_type = models.ForeignKey(
         AlertStatus, on_delete=models.CASCADE, default="ACTIVE", verbose_name=u"Статус")
-    start_date = models.DateTimeField(default=datetime.utcnow(), verbose_name=u"Дата начала")
-    finish_date = models.DateField(null=True, blank=True, verbose_name=u"Дата окончания(план)")
-    category = models.ForeignKey(AlertCategory, default="APPLICATION_ALERT", on_delete=models.CASCADE, verbose_name=u"Категория алерта")
+    start_date = models.DateTimeField(
+        default=datetime.utcnow(), verbose_name=u"Дата начала")
+    finish_date = models.DateField(
+        null=True, blank=True, verbose_name=u"Дата окончания(план)")
+    category = models.ForeignKey(AlertCategory, default="APPLICATION_ALERT",
+                                 on_delete=models.CASCADE, verbose_name=u"Категория алерта")
 
-    application = models.ForeignKey(Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
+    application = models.ForeignKey(
+        Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
 
-    control = models.ManyToManyField(Control, blank=True, null=True, verbose_name=u"Блоки управления")
-    unit = models.ManyToManyField(Unit, blank=True, null=True, verbose_name=u"Агрегаты")
-    body_type = models.ManyToManyField(BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
+    control = models.ManyToManyField(
+        Control, blank=True, null=True, verbose_name=u"Блоки управления")
+    unit = models.ManyToManyField(
+        Unit, blank=True, null=True, verbose_name=u"Агрегаты")
+    body_type = models.ManyToManyField(
+        BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
 
     description = models.TextField(blank=True, verbose_name=u"Описание")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
 
     @property
     def is_planed(self):
@@ -132,18 +163,23 @@ class Alert(models.Model):
 class Problem(models.Model):
     status = models.ForeignKey(
         ProblemStatus, on_delete=models.SET_NULL, null=True, default="NEW", verbose_name=u"Статус")
-    detection_date = models.DateTimeField(default=datetime.utcnow(), verbose_name=u"Дата и время обнаружения")
+    detection_date = models.DateTimeField(
+        default=datetime.utcnow(), verbose_name=u"Дата и время обнаружения")
     application = models.ForeignKey(
         Application, on_delete=models.CASCADE, verbose_name=u"Приложение")
     alert = models.ForeignKey(
         Alert, on_delete=models.CASCADE, null=True, blank=True, verbose_name=u"Алерт")
 
-    control = models.ManyToManyField(Control, blank=True, null=True, verbose_name=u"Блоки управления")
-    unit = models.ManyToManyField(Unit, blank=True, null=True, verbose_name=u"Агрегаты")
-    body_type = models.ManyToManyField(BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
+    control = models.ManyToManyField(
+        Control, blank=True, null=True, verbose_name=u"Блоки управления")
+    unit = models.ManyToManyField(
+        Unit, blank=True, null=True, verbose_name=u"Агрегаты")
+    body_type = models.ManyToManyField(
+        BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
 
     description = models.TextField(blank=True, verbose_name=u"Описание")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
 
     def __str__(self):
         return "%s %s" % (self.detection_date, self.application)

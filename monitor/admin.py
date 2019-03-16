@@ -29,6 +29,7 @@ Models = (
     AlertStatus,
     ProblemStatus,
     Unit,
-    BodyType)
+    BodyType,
+    ControlType)
 
 admin.site.register(Models)
