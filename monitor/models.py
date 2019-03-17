@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import *
-from django.utils.timezone import now
 import pytz
+from .util import date_expiered
 
 
 class AlertCategory(models.Model):
@@ -126,7 +126,7 @@ class Alert(models.Model):
         AlertStatus, on_delete=models.CASCADE, default="ACTIVE", verbose_name=u"Статус")
     start_date = models.DateTimeField(
         default=datetime.utcnow(), verbose_name=u"Дата начала")
-    finish_date = models.DateField(
+    finish_date = models.DateTimeField(
         null=True, blank=True, verbose_name=u"Дата окончания(план)")
     category = models.ForeignKey(AlertCategory, default="APPLICATION_ALERT",
                                  on_delete=models.CASCADE, verbose_name=u"Категория алерта")
@@ -147,10 +147,15 @@ class Alert(models.Model):
 
     @property
     def is_planed(self):
-        utc = pytz.utc
-        start_date = self.start_date.replace(tzinfo=utc)
-        now_date = datetime.utcnow().replace(tzinfo=utc)
-        return start_date > now_date
+        if not self.start_date:
+            return False
+        return not date_expiered(self.start_date)
+
+    @property
+    def is_expiered(self):
+        if not self.finish_date:
+            return False
+        return date_expiered(self.finish_date)
 
     def __str__(self):
         return "%s %s" % (self.start_date, self.application)

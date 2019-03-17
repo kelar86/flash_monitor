@@ -5,7 +5,7 @@ from monitor.models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
@@ -54,7 +54,7 @@ class AlertSerializer(serializers.ModelSerializer):
         model = Alert
         fields = ('id', 'application', 'alert_type', 'start_date',
                   'finish_date', 'category', 'control', 'unit',
-                  'body_type', 'description', 'author', 'is_planed')
+                  'body_type', 'description', 'author', 'is_planed', 'is_expiered')
 
 
 class ProblemSerializer(serializers.ModelSerializer):
