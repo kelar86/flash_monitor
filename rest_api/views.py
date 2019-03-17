@@ -33,6 +33,10 @@ class AlertsViewSet(viewsets.ModelViewSet):
     queryset = Alert.objects.all()
     serializer_class = AlertSerializer
     http_method_names = ['get', 'head']
+    
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('application__name', 'control__name',
+                     'unit__name', 'body_type__name')
 
 
 class ProblemDetail(APIView):
