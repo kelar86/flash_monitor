@@ -20,10 +20,51 @@ logger = logging.getLogger(__name__)
 
 # @authentication_classes((SessionAuthentication, BasicAuthentication))
 # @permission_classes((IsAuthenticated,))
+
+
 class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
     http_method_names = ['get', 'head']
+
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+
+
+class ControlsViewSet(viewsets.ModelViewSet):
+    queryset = Control.objects.all()
+    serializer_class = CatalogSerializer.get_for_model(Control)
+    http_method_names = ['get', 'head']
+
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+
+
+class UnitsViewSet(viewsets.ModelViewSet):
+    queryset = Unit.objects.all()
+    serializer_class = CatalogSerializer.get_for_model(Unit)
+    http_method_names = ['get', 'head']
+
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+
+
+class BodyTypesViewSet(viewsets.ModelViewSet):
+    queryset = BodyType.objects.all()
+    serializer_class = CatalogSerializer.get_for_model(BodyType)
+    http_method_names = ['get', 'head']
+
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+
+
+class ControlTypesViewSet(viewsets.ModelViewSet):
+    queryset = ControlType.objects.all()
+    serializer_class = ControlTypeSerializer
+    http_method_names = ['get', 'head']
+
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('type_name',)
 
 
 class ProblemsViewSet(APIView):
@@ -76,7 +117,7 @@ class ProblemDetail(APIView):
 class SearchFilterView(FlatMultipleModelAPIView):
     querylist = (
         {'queryset': Application.objects.all(
-        ), 'serializer_class': ApplicationSearchSerializer},
+        ), 'serializer_class': CatalogSerializer.get_for_model(Application)},
 
         {'queryset': Control.objects.all(), 'serializer_class': CatalogSerializer.get_for_model(
             Control)},

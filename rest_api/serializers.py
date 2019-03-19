@@ -20,11 +20,10 @@ class ApplicationSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'icon', 'has_controls')
 
 
-class ApplicationSearchSerializer(serializers.ModelSerializer):
-
+class ControlTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Application
-        fields = ('id', 'name', 'icon')
+        model = ControlType
+        fields = ('id', 'type_name', 'icon')
 
 
 class CatalogSerializer(serializers.ModelSerializer):
@@ -84,9 +83,7 @@ class ProblemSerializer(serializers.ModelSerializer):
                   'control', 'unit', 'body_type', 'description', 'author')
 
 
-
 class ProblemCreateSerializer(serializers.ModelSerializer):
-
 
     class Meta:
         model = Problem
