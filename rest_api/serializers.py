@@ -1,11 +1,17 @@
 from rest_framework import serializers
 from monitor.models import *
+from rest_framework.compat import unicode_to_repr
+from django.contrib.auth.models import User
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
@@ -76,3 +82,39 @@ class ProblemSerializer(serializers.ModelSerializer):
         model = Problem
         fields = ('id', 'status', 'detection_date', 'application', 'alert',
                   'control', 'unit', 'body_type', 'description', 'author')
+
+
+
+class ProblemCreateSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Problem
+        fields = ('id', 'status', 'detection_date', 'application', 'alert',
+                  'control', 'unit', 'body_type', 'description', 'author')
+
+    def create(self, validated_data):
+
+        logger.error(validated_data)
+
+        application = validated_data.get('application')
+        control = validated_data.get('control')
+        unit = validated_data.get('unit')
+        body_type = validated_data.get('body_type')
+        description = validated_data.get('description')
+        author = validated_data.get('author')
+
+        problem = Problem.objects.create(
+            application=application,
+            description=description,
+            author=author
+        )
+
+        problem.control.set(control)
+        problem.unit.set(unit)
+        problem.body_type.set(body_type)
+
+        if (validated_data.get('detection_date') is not None):
+            problem.detection_date = validated_data.get('detection_date')
+
+        return problem

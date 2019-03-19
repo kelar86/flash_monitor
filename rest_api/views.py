@@ -15,6 +15,9 @@ from django_filters import FilterSet
 from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleModelAPIView
 
 
+import logging
+logger = logging.getLogger(__name__)
+
 # @authentication_classes((SessionAuthentication, BasicAuthentication))
 # @permission_classes((IsAuthenticated,))
 class ApplicationsViewSet(viewsets.ModelViewSet):
@@ -23,17 +26,34 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'head']
 
 
-class ProblemsViewSet(viewsets.ModelViewSet):
+class ProblemsViewSet(APIView):
+
     queryset = Problem.objects.all()
     serializer_class = ProblemSerializer
-    http_method_names = ['get', 'head']
+
+    def get(self, request):
+        problems = Problem.objects.all()
+        serializer = ProblemSerializer(problems, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        data = request.data
+        data.update(author=request.user.id)
+        serializer = ProblemCreateSerializer(data=data)
+
+        if serializer.is_valid(raise_exception=True):
+            problem = serializer.save()
+
+        read_serializer = ProblemSerializer(problem)
+
+        return Response(read_serializer.data)
 
 
 class AlertsViewSet(viewsets.ModelViewSet):
     queryset = Alert.objects.all()
     serializer_class = AlertSerializer
     http_method_names = ['get', 'head']
-    
+
     filter_backends = (filters.SearchFilter,)
     search_fields = ('application__name', 'control__name',
                      'unit__name', 'body_type__name')
