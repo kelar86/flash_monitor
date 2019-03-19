@@ -33,7 +33,7 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
 
 class ControlsViewSet(viewsets.ModelViewSet):
     queryset = Control.objects.all()
-    serializer_class = CatalogSerializer.get_for_model(Control)
+    serializer_class = ControlSerializer
     http_method_names = ['get', 'head']
 
     filter_backends = (filters.SearchFilter,)

@@ -26,6 +26,12 @@ class ControlTypeSerializer(serializers.ModelSerializer):
         fields = ('id', 'type_name', 'icon')
 
 
+#Unicode decode error if serialize icon. To fix
+class ControlSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Control
+        fields = ('id', 'name', 'control_type')
+
 class CatalogSerializer(serializers.ModelSerializer):
     """
     A ModelSerialiser for any Catalog model with fields id, name, icon
