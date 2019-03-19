@@ -109,7 +109,7 @@ class ProblemDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        problem = self.get_object(id)
+        problem = self.get_object(pk)
         serializer = ProblemSerializer(problem)
         return Response(serializer.data)
 
