@@ -1,6 +1,7 @@
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 
 import json
 from rest_framework import viewsets
@@ -18,10 +19,8 @@ from drf_multiple_model.views import ObjectMultipleModelAPIView, FlatMultipleMod
 import logging
 logger = logging.getLogger(__name__)
 
-# @authentication_classes((SessionAuthentication, BasicAuthentication))
-# @permission_classes((IsAuthenticated,))
-
-
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
@@ -31,6 +30,8 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     search_fields = ('name',)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class ControlsViewSet(viewsets.ModelViewSet):
     queryset = Control.objects.all()
     serializer_class = ControlSerializer
@@ -40,6 +41,8 @@ class ControlsViewSet(viewsets.ModelViewSet):
     search_fields = ('name',)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class UnitsViewSet(viewsets.ModelViewSet):
     queryset = Unit.objects.all()
     serializer_class = CatalogSerializer.get_for_model(Unit)
@@ -49,6 +52,8 @@ class UnitsViewSet(viewsets.ModelViewSet):
     search_fields = ('name',)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class BodyTypesViewSet(viewsets.ModelViewSet):
     queryset = BodyType.objects.all()
     serializer_class = CatalogSerializer.get_for_model(BodyType)
@@ -58,6 +63,8 @@ class BodyTypesViewSet(viewsets.ModelViewSet):
     search_fields = ('name',)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class ControlTypesViewSet(viewsets.ModelViewSet):
     queryset = ControlType.objects.all()
     serializer_class = ControlTypeSerializer
@@ -67,13 +74,20 @@ class ControlTypesViewSet(viewsets.ModelViewSet):
     search_fields = ('type_name',)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class ProblemsViewSet(APIView):
 
     queryset = Problem.objects.all()
     serializer_class = ProblemSerializer
 
+
     def get(self, request):
         problems = Problem.objects.all()
+        author = self.request.query_params.get('author', None)
+        if author is not None:
+            problems = problems.filter(author=author)
+
         serializer = ProblemSerializer(problems, many=True)
         return Response(serializer.data)
 
@@ -90,6 +104,8 @@ class ProblemsViewSet(APIView):
         return Response(read_serializer.data)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class AlertsViewSet(viewsets.ModelViewSet):
     queryset = Alert.objects.all()
     serializer_class = AlertSerializer
@@ -100,6 +116,8 @@ class AlertsViewSet(viewsets.ModelViewSet):
                      'unit__name', 'body_type__name')
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class ProblemDetail(APIView):
 
     def get_object(self, id):
@@ -114,6 +132,8 @@ class ProblemDetail(APIView):
         return Response(serializer.data)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class SearchFilterView(FlatMultipleModelAPIView):
     querylist = (
         {'queryset': Application.objects.all(
@@ -130,6 +150,8 @@ class SearchFilterView(FlatMultipleModelAPIView):
     search_fields = ('name',)
 
 
+@authentication_classes((SessionAuthentication, BasicAuthentication))
+@permission_classes((IsAuthenticated,))
 class AdviseSearchView(APIView):
     def get(self, request):
         search = SearchAdvise.objects.get(pk=1)
