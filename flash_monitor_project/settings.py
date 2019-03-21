@@ -110,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = ('flash_monitor_project.backends.CaseInsensitiveModelBackend', )
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
