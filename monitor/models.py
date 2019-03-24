@@ -141,7 +141,8 @@ class Alert(models.Model):
     body_type = models.ManyToManyField(
         BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
 
-    description = models.TextField(blank=True, verbose_name=u"Описание")
+    description = models.TextField(
+        blank=True, verbose_name=u"Описание", null=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
 
@@ -182,7 +183,8 @@ class Problem(models.Model):
     body_type = models.ManyToManyField(
         BodyType, blank=True, null=True, verbose_name=u"Типы кузова")
 
-    description = models.TextField(blank=True, verbose_name=u"Описание")
+    description = models.TextField(
+        blank=True, verbose_name=u"Описание", null=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, verbose_name=u"Автор")
 
