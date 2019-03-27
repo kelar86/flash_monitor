@@ -7,30 +7,30 @@ services:
       - ./:/code
     ports:
       - "8000:8000"
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: uwsgi --http :8000 --module flash_monitor_project.wsgi
     restart: unless-stopped
+    expose:
+      - '8000'
 
-  # frontend:
-  #   build: ./frontend
-  #   volumes:
-  #     - ./frontend/static:/static
-  #   ports:
-  #     - "80:8181"
-  #   command: python3 -m http.server 8181
-    # expose:
-    #   - '8181'
-  # nginx:
-  #   image: nginx
-  #   restart: always
-  #   volumes:
-  #     - .:/app
-  #     # - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
-  #     # - ./frontend/static:/home
-  #     # - ./static/:/static
-  #   ports:
-  #     - "80:8080"
-  #     - "443:443"
-  #   # command: /bin/bash -c "envsubst < /etc/nginx/conf.d/nginx.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
-  # #   links:
-  # #       - django
-  # #       - frontend
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend/app:/app
+    ports:
+      - "8181:8181"
+    command: python3 -m http.server 8181
+    expose:
+      - '8181'
+  
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - .:/app
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+        - django
+        - frontend
