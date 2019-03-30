@@ -1,3 +1,4 @@
+#-- coding: utf-8 --
 from rest_framework import serializers
 from monitor.models import *
 from rest_framework.compat import unicode_to_repr

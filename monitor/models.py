@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from datetime import *
 import pytz
 from .util import date_expiered
+from PIL import Image
+# from django.forms.fields.FileField import UPLOADED_FILES_USE_URL
 
 
 class AlertCategory(models.Model):
@@ -63,11 +65,14 @@ class ControlType(models.Model):
 
     def __str__(self):
         return self.type_name
+    
+    def __unicode__(self):
+        return u"%s" % self.type_name
 
     class Meta:
         verbose_name = u"Тип блока управления"
         verbose_name_plural = u"Тип блока управления"
-
+    
 
 class Control(models.Model):
     name = models.CharField(max_length=255, verbose_name=u"Название")
@@ -164,6 +169,9 @@ class Alert(models.Model):
     class Meta:
         verbose_name = u"Алерт"
         verbose_name_plural = u"Алерты"
+    
+    class Media:
+        js = ("")
 
 
 class Problem(models.Model):

@@ -132,7 +132,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'monitor/static/monitor'),
+)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
@@ -146,5 +148,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',),
 
-    'UNICODE_JSON': False
+    'UNICODE_JSON': False,
+    'UPLOADED_FILES_USE_URL': True,
 }

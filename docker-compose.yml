@@ -7,7 +7,7 @@ services:
       - ./:/code
     ports:
       - "8000:8000"
-    command: uwsgi --http :8000 --module flash_monitor_project.wsgi
+    command: python3 manage.py runserver 0.0.0.0:8000
     restart: unless-stopped
     expose:
       - '8000'
@@ -22,15 +22,3 @@ services:
     expose:
       - '8181'
   
-  nginx:
-    image: nginx
-    restart: always
-    volumes:
-      - .:/app
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - "80:80"
-      - "443:443"
-    links:
-        - django
-        - frontend

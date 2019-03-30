@@ -34,7 +34,7 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
 @permission_classes((IsAuthenticated,))
 class ControlsViewSet(viewsets.ModelViewSet):
     queryset = Control.objects.all()
-    serializer_class = ControlSerializer
+    serializer_class = CatalogSerializer.get_for_model(Control)
     http_method_names = ['get', 'head']
 
     filter_backends = (filters.SearchFilter,)
