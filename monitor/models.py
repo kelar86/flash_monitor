@@ -133,7 +133,7 @@ class Alert(models.Model):
         default=datetime.utcnow(), verbose_name=u"Дата начала")
     finish_date = models.DateTimeField(
         null=True, blank=True, verbose_name=u"Дата окончания(план)")
-    category = models.ForeignKey(AlertCategory, default="APPLICATION_ALERT",
+    category = models.ForeignKey(AlertCategory, default="CONTROL_ALERT",
                                  on_delete=models.CASCADE, verbose_name=u"Категория алерта")
 
     application = models.ForeignKey(
