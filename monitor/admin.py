@@ -1,5 +1,10 @@
 from django.contrib import admin
 from .models import *
+from django.forms import ModelForm
+from django.conf import settings
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 @admin.register(Application)
@@ -12,10 +17,19 @@ class ControlAdmin(admin.ModelAdmin):
     list_display = ['name', 'icon', 'is_visiable']
 
 
+class AlertAdminForm(ModelForm):
+    list_display = ['start_date', 'application',
+         'description', 'is_planed', 'category']
+    filter_horizontal = ('control', 'unit', 'body_type')
+
+    class Media:
+        js = ('monitor/alert_admin_form.js',)
+
+
 @admin.register(Alert)
 class AlertAdmin(admin.ModelAdmin):
-    list_display = ['start_date', 'application', 'description', 'is_planed']
-    filter_horizontal = ('control', 'unit', 'body_type')
+    form = AlertAdminForm
+
 
 
 @admin.register(Problem)
@@ -29,6 +43,7 @@ Models = (
     AlertStatus,
     ProblemStatus,
     Unit,
-    BodyType)
+    BodyType,
+    ControlType)
 
 admin.site.register(Models)

@@ -15,7 +15,7 @@ def update_search_advise(sender, **kwargs):
     apps = [('Application',) + i
             for i in last_problems.values_list('application__id', 'application__name', 'application__icon') if i[0]]
     controls = [('Control',) + i
-                for i in last_problems.values_list('control__id', 'control__name', 'control__icon') if i[0]]
+                for i in last_problems.values_list('control__id', 'control__name', 'control__control_type__icon') if i[0]]
     units = [('Unit',) + i
              for i in last_problems.values_list('unit__id', 'unit__name', 'unit__icon') if i[0]]
 
